@@ -1,10 +1,8 @@
 .idea/
 node_modules/
-Icon
+Icon^M^M
 
-
-src/**/Icon
-
+src/**/Icon^M^M
 
 # General
 .DS_Store

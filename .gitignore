@@ -2,7 +2,9 @@
 node_modules/
 Icon
 
-app/**/Icon
+
+src/**/Icon
+
 
 # General
 .DS_Store

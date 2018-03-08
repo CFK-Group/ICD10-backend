@@ -54,8 +54,8 @@ module.exports = function (app) {
     app.post('/new/user', function (req, res) {
         const userData = {
             'id': null,
-            'userName': req.body.userName,
-            'password': req.body.password
+            'usuario': req.body.usuario,
+            'pswd': bcrypt.hashSync(req.body.pswd)
         };
 
         user.createUser(userData, function (err, data) {
@@ -77,12 +77,12 @@ module.exports = function (app) {
     app.post('/login', function (req, res) {
         //Buscar el usuario en ls BD
         user.getUserByUsername(req.body.username, function(err, user){
-
+            user = user[0];
             if (err) return res.status(500).send('Error on the server.');
             if (!user) return res.status(404).send('No user found.');
 
             //Validar la contraseña
-            var passwordIsValid = bcrypt.compareSync(req.body.password, user[0].password);
+            var passwordIsValid = bcrypt.compareSync(req.body.password, user.pswd);
 
             if (!passwordIsValid) return res.status(401).send({ auth: false, token: null });
 

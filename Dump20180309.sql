@@ -45,6 +45,33 @@ LOCK TABLES `campania` WRITE;
 UNLOCK TABLES;
 
 --
+-- Table structure for table `campania_has_target`
+--
+
+DROP TABLE IF EXISTS `campania_has_target`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `campania_has_target` (
+  `campania_id` int(11) NOT NULL,
+  `target_id` int(11) NOT NULL,
+  PRIMARY KEY (`campania_id`,`target_id`),
+  KEY `fk_campania_has_target_target1_idx` (`target_id`),
+  KEY `fk_campania_has_target_campania1_idx` (`campania_id`),
+  CONSTRAINT `fk_campania_has_target_campania1` FOREIGN KEY (`campania_id`) REFERENCES `campania` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_campania_has_target_target1` FOREIGN KEY (`target_id`) REFERENCES `target` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `campania_has_target`
+--
+
+LOCK TABLES `campania_has_target` WRITE;
+/*!40000 ALTER TABLE `campania_has_target` DISABLE KEYS */;
+/*!40000 ALTER TABLE `campania_has_target` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `canal`
 --
 
@@ -246,6 +273,84 @@ LOCK TABLES `spot` WRITE;
 UNLOCK TABLES;
 
 --
+-- Table structure for table `stb`
+--
+
+DROP TABLE IF EXISTS `stb`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `stb` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `UA` varchar(45) DEFAULT NULL,
+  `Hexa` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id_UNIQUE` (`id`),
+  UNIQUE KEY `UA_UNIQUE` (`UA`),
+  UNIQUE KEY `Hexa_UNIQUE` (`Hexa`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `stb`
+--
+
+LOCK TABLES `stb` WRITE;
+/*!40000 ALTER TABLE `stb` DISABLE KEYS */;
+/*!40000 ALTER TABLE `stb` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `stb_has_target`
+--
+
+DROP TABLE IF EXISTS `stb_has_target`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `stb_has_target` (
+  `stb_id` int(11) NOT NULL,
+  `target_id` int(11) NOT NULL,
+  PRIMARY KEY (`stb_id`,`target_id`),
+  KEY `fk_stb_has_target_target1_idx` (`target_id`),
+  KEY `fk_stb_has_target_stb1_idx` (`stb_id`),
+  CONSTRAINT `fk_stb_has_target_stb1` FOREIGN KEY (`stb_id`) REFERENCES `stb` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_stb_has_target_target1` FOREIGN KEY (`target_id`) REFERENCES `target` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `stb_has_target`
+--
+
+LOCK TABLES `stb_has_target` WRITE;
+/*!40000 ALTER TABLE `stb_has_target` DISABLE KEYS */;
+/*!40000 ALTER TABLE `stb_has_target` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `target`
+--
+
+DROP TABLE IF EXISTS `target`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `target` (
+  `id` int(11) NOT NULL,
+  `nombre` varchar(45) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id_UNIQUE` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `target`
+--
+
+LOCK TABLES `target` WRITE;
+/*!40000 ALTER TABLE `target` DISABLE KEYS */;
+/*!40000 ALTER TABLE `target` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `usuario`
 --
 
@@ -287,4 +392,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-03-08 17:44:02
+-- Dump completed on 2018-03-09 16:11:52

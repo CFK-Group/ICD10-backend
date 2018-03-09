@@ -1,24 +1,14 @@
-const mysql = require('mysql');
-
-connection = mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: '',
-    database: 'invidi'
-});
-
 let userModel = {};
 
 userModel.getUsers = function (callback) {
     if(connection){
-        connection.query(
-            'SELECT *FROM usuario ORDER BY id',
-            function (err, result) {
+        connection.query('SELECT *FROM usuario ORDER BY id',
+            function(err, row) {
                 if(err){
-                    throw err
-                }else{
-                    callback(null, result)
+                    callback(err, null);
+                    console.log(err);
                 }
+                if(!err) callback(null, row);
             }
         )
     }
@@ -28,12 +18,11 @@ userModel.getUserById = function(id, callback) {
     if (connection) {
         connection.query('SELECT * FROM usuario WHERE id=?', id,
             function(err, row) {
-                if(err) {
-                    throw err
+                if(err){
+                    callback(err, null);
+                    console.log(err);
                 }
-                else {
-                    callback(null, row);
-                }
+                if(!err) callback(null, row);
             }
         )
     }
@@ -42,12 +31,12 @@ userModel.getUserById = function(id, callback) {
 userModel.getUserByUsername = function(user, callback) {
     if (connection) {
         connection.query('SELECT * FROM usuario WHERE usuario=?', user,
-            function (err, res) {
-                if(err) {
-                    throw err;
-                }else{
-                    callback(null, res)
+            function(err, row) {
+                if(err){
+                    callback(err, null);
+                    console.log(err);
                 }
+                if(!err) callback(null, row);
             }
         );
     }
@@ -57,12 +46,12 @@ userModel.createUser = function (userData, callback) {
     if(connection){
         connection.query(
             'INSERT INTO usuario SET ?', userData,
-            function (err, rows) {
+            function(err, row) {
                 if(err){
-                    throw err
-                }else{
-                    callback(null, rows)
+                    callback(err, null);
+                    console.log(err);
                 }
+                if(!err) callback(null, row);
             }
         )
     }

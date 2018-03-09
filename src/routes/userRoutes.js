@@ -77,8 +77,10 @@ module.exports = function (app) {
     app.post('/login', function (req, res) {
         //Buscar el usuario en ls BD
         user.getUserByUsername(req.body.username, function(err, user){
-            user = user[0];
+            
             if (err) return res.status(500).send('Error on the server.');
+
+            user = user[0];
             if (!user) return res.status(404).send('No user found.');
 
             //Validar la contraseña

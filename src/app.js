@@ -2,6 +2,7 @@ const express = require('express');
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const cors = require('cors');
+const db = require('./middlewares/database');
 
 // Settings
 const port =  process.env.PORT || 8100;

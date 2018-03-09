@@ -1,12 +1,5 @@
 const mysql = require('mysql');
 
-connection = mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: '',
-    database: 'ICD10'
-});
-
 let icd10Model = {};
 
 icd10Model.getICD10s = function (callback) {
@@ -15,7 +8,7 @@ icd10Model.getICD10s = function (callback) {
             'SELECT *FROM icd10 ORDER BY id',
             function (err, result) {
                 if(err){
-                    throw err;
+                    console.log('Error: ', err);
                 }else{
                     callback(null, result)
                 }
@@ -29,7 +22,7 @@ icd10Model.getICD10 = function(id, callback) {
         connection.query('SELECT * FROM icd10 WHERE id=?', id,
             function(err, row) {
                 if(err) {
-                    throw err;
+                    console.log('Error: ', err);
                 }
                 else {
                     callback(null, row);
@@ -45,7 +38,7 @@ icd10Model.createICD10 = function (icd10Data, callback) {
             'INSERT INTO icd10 SET ?', icd10Data,
             function (err, rows) {
                 if(err){
-                    throw err
+                    console.log('Error: ', err);
                 }else{
                     callback(null,  {
                         success: true,

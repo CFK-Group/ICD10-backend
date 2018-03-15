@@ -5,8 +5,6 @@ const jwt = require('jsonwebtoken');
 let global = {};
 
 global.auth = function (username, password, res) {
-    console.log(username);
-    console.log(password);
     user.getUserByUsername(username, function (err, user) {
         if (err) return res.status(500).send('Error on the server.');
         user = user[0];
@@ -20,7 +18,6 @@ global.auth = function (username, password, res) {
         token = jwt.sign({id: user.id}, secret, {
             expiresIn: 86400 // expires in 24 hoursΩ
         });
-        console.log(token);
         return res.status(200).send({ auth: true, token: token });
     });
 

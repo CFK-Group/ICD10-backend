@@ -73,7 +73,6 @@ module.exports = function (app) {
     });
 
     app.post('/login', function (req, res) {
-        console.log('login');
         let username = req.body.username;
         let password = req.body.password;
         global.auth(username, password, res);

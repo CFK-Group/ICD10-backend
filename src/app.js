@@ -24,6 +24,8 @@ app.use(function(req, res, next) {
 // Routes
 require('./routes/icd10Routes')(app);
 require('./routes/userRoutes')(app);
+require('./routes/channelRoutes')(app);
+require('./routes/campaignRoutes')(app);
 
 app.listen(port, () => {
     console.log(`Servidor iniciado en el puerto ${port}`);

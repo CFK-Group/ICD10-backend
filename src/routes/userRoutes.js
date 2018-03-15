@@ -1,7 +1,5 @@
 const user = require('../models/user');
-const bcrypt = require('bcrypt-nodejs');
-const jwt = require('jsonwebtoken');
-const secret = 'starLabs';
+const global = require('../middlewares/auth');
 
 module.exports = function (app) {
     app.get('/users', (req, res) => {
@@ -75,26 +73,11 @@ module.exports = function (app) {
     });
 
     app.post('/login', function (req, res) {
-        //Buscar el usuario en ls BD
-        user.getUserByUsername(req.body.username, function(err, user){
-            
-            if (err) return res.status(500).send('Error on the server.');
-
-            user = user[0];
-            if (!user) return res.status(404).send('No user found.');
-
-            //Validar la contraseña
-            var passwordIsValid = bcrypt.compareSync(req.body.password, user.pswd);
-
-            if (!passwordIsValid) return res.status(401).send({ auth: false, token: null });
-
-            //Crear token
-            var token = jwt.sign({ id: user.id }, secret, {
-                expiresIn: 86400 // expires in 24 hours
-            });
-
-            return res.status(200).send({ auth: true, token: token });
-        });
+        console.log('login');
+        let username = req.body.username;
+        let password = req.body.password;
+        global.auth(username, password, res);
     });
 
 };
+

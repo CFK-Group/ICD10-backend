@@ -14,4 +14,28 @@ orderlineModel.getOrderlinesByCampaign = function (callback) {
     }
 };
 
+orderlineModel.addOrderLine = function(orderlineData, insertedId, callback){
+    if(connection){
+        for (const orderline of orderlineData){
+            orderline.campania_id = insertedId;
+        }
+
+        nestedArray = orderlineData.map(function (obj) {
+            return [parseInt(obj.numero), obj.nombre, parseInt(obj.prioridad) || 0, obj.campania_id, parseInt(obj.spot_id)];
+        });
+        const sql = 'INSERT INTO orderline (numero, nombre, prioridad, campania_id, spot_id) VALUES ?';
+        connection.query(sql, [nestedArray],
+            function(err, row) {
+                if(err){
+                    callback(err, null);
+                    console.log(err);
+                }
+                if(!err){
+                    console.log('listo');
+                    callback(null, row);
+                }
+            })
+    }
+};
+
 module.exports = orderlineModel;

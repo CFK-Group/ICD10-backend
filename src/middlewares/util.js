@@ -1,56 +1,59 @@
+var merge = require('merge-objects');
+
 let util = {};
 
+function isEmptyObject(obj) {
+    for (var key in obj) {
+        if (Object.prototype.hasOwnProperty.call(obj, key)) {
+            return false;
+        }
+    }
+    return true;
+}
+
 util.mix = function (objectToMix) {
-    mixed = [];
-    for (const object of objectToMix) {
-        if (mixed.length === 0){
-            first = {
-                orderId: object.orderId,
-                nombreCampania: object.nombreCampania,
-                inicio: object.inicio,
-                fin: object.fin,
-                orderlines:[
-                    {id:object.orderline, nombre: object.nombreOrderLine, prioridad: object.prioridad, spot: object.spot}
-                ]
-            };
-            mixed.push(first);
-        }else{
-            for (const mixedElement of mixed){
-                if (object.orderId === mixedElement.orderId){
-                    console.log('Este objeto ya se encuentra dentro del array');
-                    for (const orderline of mixedElement.orderlines){
-                        if (object.orderline !== orderline.id){
-                            mixedElement.orderlines.push({
-                                id: object.orderline,
-                                nombre: object.nombreOrderLine,
-                                prioridad: object.prioridad,
-                                spot: object.spot
-                            })
-                        }
+    campanias = [];
+
+    for(object of objectToMix){
+        campanias.push({
+            orderId: object.orderId,
+            nombreCampania: object.nombreCampania,
+            inicio: object.inicio,
+            fin: object.fin,
+            orderlines:[
+                {id:object.orderline, nombre: object.nombreOrderLine, prioridad: object.prioridad, spot: object.spot}
+            ]
+        });
+    }
+
+
+    final = [];
+    insertedCampaigns = [];
+    for (var i = 0; i < campanias.length; i++) {
+        var c = {};
+        if(!insertedCampaigns.includes(campanias[i].orderId)) {
+            for (var j = 0; j < campanias.length; j++) {
+                if (j > i) {
+                    var a = campanias[i];
+                    var b = campanias[j];
+                    if (a.orderId === b.orderId) {
+                        c = merge(a, b);
                     }
-                }else{
-                    console.log('Objeto Nuevo');
-                    newElement = {
-                        orderId: object.orderId,
-                        nombreCampania: object.nombreCampania,
-                        inicio: object.inicio,
-                        fin: object.fin,
-                        orderlines: [
-                            {
-                                id: object.orderline,
-                                nombre: object.nombreOrderLine,
-                                prioridad: object.prioridad,
-                                spot: object.spot
-                            }
-                        ]
-                    };
-                    mixed.push(newElement);
                 }
             }
-        }
-  }
 
-    return mixed;
+            if (!isEmptyObject(c)) {
+                final.push(c);
+                insertedCampaigns.push(c.orderId);
+            } else {
+                final.push(campanias[i]);
+                insertedCampaigns.push(campanias[i].orderId);
+            }
+
+        }
+    }
+
+    return final;
 };
 
 module.exports = util;

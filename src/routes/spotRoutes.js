@@ -9,10 +9,12 @@ module.exports = function (app) {
             params = [1, 0];
         }else if(filter === 'asset'){
             params = [0, 1];
+        }else if (filter === null){
+            params = [0, 0];
         }
         global.validateToken(token, function (response, err){
             if (!err){
-                spot.getChannels(params, function (error, data) {
+                spot.getSpots(params, function (error, data) {
                     if (!error) {
                         res.status(200).json(data);
                     } else {
@@ -26,11 +28,11 @@ module.exports = function (app) {
         });
     });
 
-    app.post('/channels/new', (req, res) => {
+    app.post('/spots/new', (req, res) => {
         global.validateToken(req.query.token, function (response, err){
             if (!err){
                 console.log(req.body);
-                channel.addChannel(req.body, function (error, data) {
+                spot.addSpot(req.body, function (error, data) {
                     if(!error){
                         res.status(200).json(data);
                     }else{

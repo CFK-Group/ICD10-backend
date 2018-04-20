@@ -1,5 +1,6 @@
 const user = require('../models/user');
 const global = require('../middlewares/auth');
+const bcrypt = require('bcrypt-nodejs');
 
 module.exports = function (app) {
     app.get('/users', (req, res) => {
@@ -53,7 +54,9 @@ module.exports = function (app) {
         const userData = {
             'id': null,
             'usuario': req.body.usuario,
-            'pswd': bcrypt.hashSync(req.body.pswd)
+            'pswd': bcrypt.hashSync(req.body.pswd),
+            'nombre': req.body.nombre,
+            'apellido': req.body.apellido,
         };
 
         user.createUser(userData, function (err, data) {

@@ -26,6 +26,12 @@ module.exports = function (app) {
     app.post('/campaign/new', (req, res) => {
         global.validateToken(req.query.token, function (response, err){
             if (!err){
+                console.log(req.body.orderlines[0].hhtag);
+
+                //BUSCAR LA FORMA DE LEER LOS ID DE LOS HHTAG QUE VIENEN EN EL OBJETO
+                //Y USAR ESO PARA ENVIARLO A LOS HHTAG
+                //REVISAR EL COMO SE ESTAN AGREGANDO LOS HHTAG EN LA BD, PUEDE SER NECESARIO RECONTRUIRLA.
+
                 campaignData = omit(req.body, 'orderlines'); //datos de la campaña, sin las orderline
                 campaignOrderlines = req.body.orderlines;
                 console.log(campaignData);

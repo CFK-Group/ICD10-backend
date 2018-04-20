@@ -7,6 +7,7 @@ module.exports = function (app){
             if (!err){
                 hhTag.getHHTags(function (error, data) {
                     if (!error) {
+                        console.log(data);
                         res.status(200).json(data);
                     } else {
                         console.log('Error!!!! ', error);

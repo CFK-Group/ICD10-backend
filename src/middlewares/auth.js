@@ -29,7 +29,7 @@ global.validateToken = function(token, callback){
         if (err) callback(null, {statusCode: 500, data:{ auth: false, message: 'Failed to authenticate token.' }});
         // if everything good, save to request for use in other routes
        callback(true, null);
-    });
+   });
 };
 
 module.exports = global;
